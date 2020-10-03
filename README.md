@@ -1,75 +1,71 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# The Learning API
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+You can use this app to generate mock data locally and practice you Web dev skills.
 
-## Description
+Generate random:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Users
+- Cashflow and expenses
+- More to come!
 
-## Installation
+## Getting started
+
+Clone this repository and then install its dependencies
 
 ```bash
-$ npm install
+git clone https://github.com/CodeDevStack/thelearningapi.git
+cd thelearningapi
+npm i
+
+npm run start
 ```
 
-## Running the app
+### Users
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```javascript
+axios.get("http://localhost:3000/rest/users?amount=1");
 ```
 
-## Test
+Returns
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+  "result": [
+    {
+      "name": "Navy",
+      "lastName": "Rivera",
+      "username": "NavyRivera",
+      "email": "navyrivera@thelearningapi.com",
+      "picture": "https://thispersondoesnotexist.com/image",
+      "id": "8be97367-c674-4a9f-9857-eb74baa2963a"
+    }
+  ]
+}
 ```
 
-## Support
+### Cashflow and expenses
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```javascript
+axios.get("http://localhost:3000/rest/cashflow?amount=2");
+```
 
-## Stay in touch
+Returns
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```json
+{
+  "result": [
+    {
+      "amount": "-24.51",
+      "concept": "Homeowners or renters insurance",
+      "date": "2020-10-01",
+      "id": "b20bd34c-2888-4591-9d57-42759534fe83"
+    },
+    {
+      "amount": "439.53",
+      "concept": "Salary",
+      "date": "2020-10-02",
+      "id": "6421269c-4e6f-49e1-8b3e-3ab99b189e76"
+    }
+  ]
+}
+```
