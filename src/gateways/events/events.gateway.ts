@@ -5,6 +5,7 @@ import {
   WebSocketServer,
   WsResponse
 } from "@nestjs/websockets";
+import dayjs from "dayjs";
 import { Server } from "http";
 import { interval, Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -18,7 +19,9 @@ export class EventsGateway {
   @SubscribeMessage("stock")
   getStockPrice(
     @MessageBody() { symbol }: { symbol: string }
-  ): Observable<WsResponse<{ price: string; symbol: string }>> {
+  ): Observable<
+    WsResponse<{ price: string; symbol: string; timestamp: number }>
+  > {
     const numbers = interval(1000);
     const simplex = new SimplexNoise();
     let price = 100;
@@ -34,7 +37,11 @@ export class EventsGateway {
 
         return {
           event: "stock",
-          data: { price: price.toFixed(2), symbol }
+          data: {
+            price: price.toFixed(2),
+            symbol,
+            timestamp: dayjs().valueOf()
+          }
         };
       })
     );
