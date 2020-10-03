@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "the-learning-api",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "A simple local API to learn web development",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",

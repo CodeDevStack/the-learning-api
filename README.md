@@ -13,7 +13,7 @@ Generate random:
 Clone this repository and then install its dependencies
 
 ```bash
-git clone https://github.com/CodeDevStack/thelearningapi.git
+git clone https://github.com/CodeDevStack/the-learning-api.git
 cd thelearningapi
 npm i
 
