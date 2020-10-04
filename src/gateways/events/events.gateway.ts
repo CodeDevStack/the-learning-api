@@ -29,7 +29,7 @@ export class EventsGateway {
     const price = symbols.reduce((prices, symbol) => {
       prices[symbol] = 100;
       return prices;
-    }, {});
+    }, Object.create(null));
 
     return numbers.pipe(
       map((item) => {
@@ -39,7 +39,7 @@ export class EventsGateway {
             const delta = symbols.reduce((deltas, symbol, index) => {
               deltas[symbol] = simplex.noise2D(item + index * 1000, 0) * 10;
               return deltas;
-            }, {});
+            }, Object.create(null));
 
             price[symbol] = price[symbol] + delta[symbol];
 
