@@ -6,6 +6,7 @@ Generate random:
 
 - Users
 - Cashflow and expenses
+- Websocket stock ticker
 - More to come!
 
 ## Getting started
@@ -68,4 +69,33 @@ Returns
     }
   ]
 }
+```
+
+### Websocket stock ticker
+
+```javascript
+const socket = io("http://localhost:3000");
+socket.on("connect", function () {
+  socket.emit("stock", { symbols: ["APPL", "TSLA"] });
+});
+socket.on("stock", function (data) {
+  console.log("event", data);
+});
+```
+
+Returns events
+
+```json
+[
+  {
+    "price": "100.00",
+    "symbol": "APPL",
+    "timestamp": 1601773818230
+  },
+  {
+    "price": "99.36",
+    "symbol": "TSLA",
+    "timestamp": 1601773818230
+  }
+]
 ```

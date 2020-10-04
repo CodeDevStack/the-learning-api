@@ -18,30 +18,41 @@ export class EventsGateway {
 
   @SubscribeMessage("stock")
   getStockPrice(
-    @MessageBody() { symbol }: { symbol: string }
+    @MessageBody() { symbols }: { symbols: string[] }
   ): Observable<
-    WsResponse<{ price: string; symbol: string; timestamp: number }>
+    WsResponse<{ price: string; symbol: string; timestamp: number }[]>
   > {
+    if (!Array.isArray(symbols)) return;
+
     const numbers = interval(1000);
     const simplex = new SimplexNoise();
-    let price = 100;
+    const price = symbols.reduce((prices, symbol) => {
+      prices[symbol] = 100;
+      return prices;
+    }, {});
 
     return numbers.pipe(
       map((item) => {
-        const dif = simplex.noise2D(item, 0) * 10;
-        price = price + dif;
-
-        if (price < 0) {
-          price = 0;
-        }
-
         return {
           event: "stock",
-          data: {
-            price: price.toFixed(2),
-            symbol,
-            timestamp: dayjs().valueOf()
-          }
+          data: symbols.map((symbol) => {
+            const delta = symbols.reduce((deltas, symbol, index) => {
+              deltas[symbol] = simplex.noise2D(item + index * 1000, 0) * 10;
+              return deltas;
+            }, {});
+
+            price[symbol] = price[symbol] + delta[symbol];
+
+            if (price[symbol] < 0) {
+              price[symbol] = 0;
+            }
+
+            return {
+              price: price[symbol].toFixed(2),
+              symbol,
+              timestamp: dayjs().valueOf()
+            };
+          })
         };
       })
     );
