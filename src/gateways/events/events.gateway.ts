@@ -27,9 +27,9 @@ export class EventsGateway {
     const numbers = interval(1000);
     const simplex = new SimplexNoise();
     const price = symbols.reduce((prices, symbol) => {
-      prices[symbol] = 100;
+      prices.set(symbol, 100);
       return prices;
-    }, Object.create(null));
+    }, new Map());
 
     return numbers.pipe(
       map((item) => {
@@ -37,18 +37,18 @@ export class EventsGateway {
           event: "stock",
           data: symbols.map((symbol) => {
             const delta = symbols.reduce((deltas, symbol, index) => {
-              deltas[symbol] = simplex.noise2D(item + index * 1000, 0) * 10;
+              deltas.set(symbol, simplex.noise2D(item + index * 1000, 0) * 10);
               return deltas;
-            }, Object.create(null));
+            }, new Map());
 
-            price[symbol] = price[symbol] + delta[symbol];
+            price.set(symbol, price.get(symbol) + delta.get(symbol));
 
-            if (price[symbol] < 0) {
-              price[symbol] = 0;
+            if (price.get(symbol) < 0) {
+              price.set(symbol, 0);
             }
 
             return {
-              price: price[symbol].toFixed(2),
+              price: price.get(symbol).toFixed(2),
               symbol,
               timestamp: dayjs().valueOf()
             };
